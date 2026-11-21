@@ -23,7 +23,7 @@
         </p>
 
         <div class="hero-buttons">
-            <a href="{% url 'login' %}" class="btn">Admin Login →</a>
+            <a href="{% url 'admin:login' %}" class="btn">Admin Login →</a>
             <a href="#features" class="secondary-btn">Explore Features</a>
         </div>
     </div>
@@ -46,29 +46,29 @@
 
     <div class="feature-grid">
 
-        <div class="feature-card">
+        <a class="feature-card" href="{% url 'admin:hostel_student_changelist' %}">
             <div class="feature-icon">👨‍🎓</div>
             <h3>Student Management</h3>
             <p>Maintain student details and admission records easily.</p>
-        </div>
+        </a>
 
-        <div class="feature-card">
+        <a class="feature-card" href="{% url 'admin:hostel_room_changelist' %}">
             <div class="feature-icon">🛏️</div>
             <h3>Room Management</h3>
             <p>Manage rooms, bed availability and student allocation.</p>
-        </div>
+        </a>
 
-        <div class="feature-card">
+        <a class="feature-card" href="{% url 'admin:hostel_feepayment_changelist' %}">
             <div class="feature-icon">💳</div>
             <h3>Fee Management</h3>
             <p>Track payments, pending fees and payment history.</p>
-        </div>
+        </a>
 
-        <div class="feature-card">
+        <a class="feature-card" href="{% url 'admin:index' %}">
             <div class="feature-icon">📊</div>
             <h3>Smart Dashboard</h3>
             <p>View important hostel statistics in one dashboard.</p>
-        </div>
+        </a>
 
     </div>
 

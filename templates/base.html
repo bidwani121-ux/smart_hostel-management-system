@@ -13,60 +13,62 @@
 </head>
 
 <body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+            <a class="brand" href="{% url 'home' %}">
+                <span class="brand-mark" aria-hidden="true">H</span>
+                <span>Hostel<span class="brand-light">Ease</span></span>
+            </a>
 
-    <div class="app-container">
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="brand">
-                <div class="brand-icon">🏠</div>
-                <div>
-                    <h2>HostelEase</h2>
-                    <p>Management System</p>
-                </div>
-            </div>
-
-            <nav class="sidebar-nav">
-                <p class="nav-heading">MAIN MENU</p>
-
-                <a href="#" class="nav-link active">🏡 Dashboard</a>
-                <a href="#" class="nav-link">👨‍🎓 Students</a>
-                <a href="#" class="nav-link">🛏️ Rooms</a>
-                <a href="#" class="nav-link">💳 Fees</a>
-
-                <p class="nav-heading">ACCOUNT</p>
-                <a href="#" class="nav-link">⚙️ Settings</a>
-                <a href="#" class="nav-link">🚪 Logout</a>
+            <p class="sidebar-label">Workspace</p>
+            <nav class="side-nav">
+                <a class="nav-link" href="{% url 'admin:index' %}">
+                    <span class="nav-icon" aria-hidden="true">⌂</span>Dashboard
+                </a>
+                <a class="nav-link" href="{% url 'admin:hostel_student_changelist' %}">
+                    <span class="nav-icon" aria-hidden="true">♙</span>Students
+                </a>
+                <a class="nav-link" href="{% url 'admin:hostel_room_changelist' %}">
+                    <span class="nav-icon" aria-hidden="true">▦</span>Rooms
+                </a>
+                <a class="nav-link" href="{% url 'admin:hostel_feepayment_changelist' %}">
+                    <span class="nav-icon" aria-hidden="true">◇</span>Fees
+                </a>
             </nav>
 
             <div class="sidebar-footer">
-                <p>Making hostel life easier 💙</p>
+                <div class="admin-avatar" aria-hidden="true">A</div>
+                <div class="admin-info">
+                    <strong>Administrator</strong>
+                    <span>Hostel manager</span>
+                </div>
+                <a class="logout-link" href="{% url 'admin:logout' %}" aria-label="Log out" title="Log out">↗</a>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-
+        <div class="workspace">
             <header class="topbar">
-                <div>
+                <button class="icon-button mobile-menu-button" type="button" id="sidebarToggle"
+                        aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">
+                    <span aria-hidden="true">☰</span>
+                </button>
+                <div class="topbar-context">
+                    <span class="eyebrow">SMART HOSTEL MANAGEMENT</span>
                     <h1>{% block page_heading %}Dashboard{% endblock %}</h1>
-                    <p>Welcome to your hostel management workspace!</p>
                 </div>
-
-                <div class="admin-profile">
-                    <div class="profile-avatar">A</div>
-                    <span>Admin</span>
+                <div class="topbar-actions">
+                    <span class="today-label">{% now "D, d M Y" %}</span>
+                    <button class="icon-button theme-toggle" type="button" id="themeToggle"
+                            aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+                        <span aria-hidden="true">◐</span>
+                    </button>
                 </div>
             </header>
-
-            <section class="page-content">
-                {% block content %}
-                {% endblock %}
-            </section>
-
-        </main>
-
+            <main class="page-content">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
     </div>
-
+    <script src="{% static 'js/main.js' %}" defer></script>
 </body>
 </html>
