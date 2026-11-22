@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome | HostelEase{% endblock %}
+
+{% block page_heading %}Welcome to HostelEase{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+
+    <div class="hero-text">
+        <span class="welcome-tag">🏠 SMART HOSTEL MANAGEMENT</span>
+
+        <h1>Making Hostel Management<br>
+            <span>Simple & Smarter.</span>
+        </h1>
+
+        <p>
+            Manage students, rooms and hostel fees in one place.
+            A smarter way to make hostel administration easy,
+            organized and stress-free.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'login' %}" class="btn">Admin Login →</a>
+            <a href="#features" class="secondary-btn">Explore Features</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-illustration">🏡</div>
+        <div class="floating-card">✨ Easy Management</div>
+        <div class="floating-card second-card">💙 Smart Living</div>
+    </div>
+
+</section>
+
+<section id="features" class="features-section">
+
+    <div class="section-heading">
+        <span>WHAT WE OFFER</span>
+        <h2>Everything in One Place</h2>
+        <p>Simple tools to manage your hostel efficiently.</p>
+    </div>
+
+    <div class="feature-grid">
+
+        <a class="feature-card" href="/students/">
+            <div class="feature-icon">👨‍🎓</div>
+            <h3>Student Management</h3>
+            <p>Maintain student details and admission records easily.</p>
+        </a>
+
+        <a class="feature-card" href="/rooms/">
+            <div class="feature-icon">🛏️</div>
+            <h3>Room Management</h3>
+            <p>Manage rooms, bed availability and student allocation.</p>
+        </a>
+
+        <a class="feature-card" href="/fees/">
+            <div class="feature-icon">💳</div>
+            <h3>Fee Management</h3>
+            <p>Track payments, pending fees and payment history.</p>
+        </a>
+
+        <a class="feature-card" href="{% url 'dashboard' %}">
+            <div class="feature-icon">📊</div>
+            <h3>Smart Dashboard</h3>
+            <p>View important hostel statistics in one dashboard.</p>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="bottom-message">
+    <h2>A Better Way to Manage Your Hostel 💙</h2>
+    <p>Organized records. Easier management. Happier hostel life.</p>
+</section>
+
+{% endblock %}

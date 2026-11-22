@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Rooms | HavenHostel{% endblock %}
+{% block page_heading %}Rooms{% endblock %}
+
+{% block content %}
+  <section class="page-intro">
+    <div>
+      <p class="page-kicker">HOSTEL OVERVIEW</p>
+      <h2>Room directory</h2>
+      <p class="muted-copy">Manage room availability and student allocations.</p>
+    </div>
+    <button class="btn btn-primary-soft" type="button">＋ Add room</button>
+  </section>
+
+  <section class="room-summary" aria-label="Room summary">
+    <div class="summary-item">
+      <span class="summary-dot dot-blue"></span>
+      <span>All rooms</span>
+      <strong>{{ total_rooms|default:"24" }}</strong>
+    </div>
+    <div class="summary-item">
+      <span class="summary-dot dot-green"></span>
+      <span>Available</span>
+      <strong>{{ available_rooms|default:"6" }}</strong>
+    </div>
+    <div class="summary-item">
+      <span class="summary-dot dot-red"></span>
+      <span>Occupied</span>
+      <strong>{{ occupied_rooms|default:"18" }}</strong>
+    </div>
+  </section>
+
+  <div class="section-heading">
+    <div>
+      <h3>All rooms</h3>
+      <p class="muted-copy">Hover or tap a card to view its details.</p>
+    </div>
+    <span class="view-label">Room cards <span aria-hidden="true">▦</span></span>
+  </div>
+
+  <section class="room-grid" aria-label="Rooms">
+    {% for room in rooms %}
+      <article class="flip-card" data-flip-card tabindex="0"
+               aria-label="Room {{ room.room_number }}. Activate to view details."
+               aria-expanded="false">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-topline">
+              <span class="room-type">{{ room.room_type|default:"Standard room" }}</span>
+              <span class="status-pill {% if room.is_available %}status-available{% else %}status-occupied{% endif %}">
+                {{ room.status|default:"Available" }}
+              </span>
+            </div>
+            <div class="room-number-block">
+              <span class="room-label">ROOM</span>
+              <h4>{{ room.room_number }}</h4>
+              <p>{{ room.building|default:"Main building" }}</p>
+            </div>
+            <div class="room-capacity">
+              <span>Occupancy</span>
+              <strong>{{ room.occupied_beds|default:"0" }}<span> / {{ room.capacity|default:"4" }} beds</span></strong>
+            </div>
+            <span class="flip-hint"><span aria-hidden="true">↻</span> Tap to flip</span>
+          </div>
+
+          <div class="flip-card-face flip-card-back">
+            <div>
+              <span class="room-label">ROOM DETAILS</span>
+              <h4>Room {{ room.room_number }}</h4>
+            </div>
+            <dl class="room-details">
+              <div><dt>Assigned student</dt><dd>{{ room.student.name|default:"No student allocated" }}</dd></div>
+              <div><dt>Bed capacity</dt><dd>{{ room.capacity|default:"4" }} beds</dd></div>
+              <div><dt>Room type</dt><dd>{{ room.room_type|default:"Standard" }}</dd></div>
+            </dl>
+            <button class="btn btn-light-action" type="button" data-room-id="{{ room.id }}">
+              Allocate student <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    {% empty %}
+      <article class="flip-card" data-flip-card tabindex="0"
+               aria-label="Room A-101. Activate to view details." aria-expanded="false">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <div class="card-topline">
+              <span class="room-type">Standard room</span>
+              <span class="status-pill status-available">Available</span>
+            </div>
+            <div class="room-number-block">
+              <span class="room-label">ROOM</span>
+              <h4>A-101</h4>
+              <p>Main building · First floor</p>
+            </div>
+            <div class="room-capacity">
+              <span>Occupancy</span>
+              <strong>2<span> / 4 beds</span></strong>
+            </div>
+            <span class="flip-hint"><span aria-hidden="true">↻</span> Tap to flip</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <div>
+              <span class="room-label">ROOM DETAILS</span>
+              <h4>Room A-101</h4>
+            </div>
+            <dl class="room-details">
+              <div><dt>Assigned student</dt><dd>Alex Morgan</dd></div>
+              <div><dt>Bed capacity</dt><dd>4 beds</dd></div>
+              <div><dt>Room type</dt><dd>Standard</dd></div>
+            </dl>
+            <button class="btn btn-light-action" type="button" data-room-id="demo-a101">
+              Allocate student <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+{% endblock %}

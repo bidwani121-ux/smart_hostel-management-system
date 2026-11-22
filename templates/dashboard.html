@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | HostelEase{% endblock %}
+
+{% block page_heading %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="margin-bottom: 24px;">
+    <div class="hero-text">
+        <span class="welcome-tag">👋 WELCOME BACK, {{ user.username|upper }}</span>
+        <h1>HostelEase Control Panel</h1>
+        <p>You are securely logged in. Manage students, rooms, fees, or open the full Django Admin database panel below.</p>
+        <div class="hero-buttons" style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/admin/" class="btn">Open Database Admin →</a>
+            <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="secondary-btn" style="cursor: pointer;">Log Out ↗</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="feature-grid">
+        <a class="feature-card" href="/admin/auth/user/">
+            <div class="feature-icon">🔐</div>
+            <h3>Admin & Staff Users</h3>
+            <p>Manage login accounts, passwords, and permissions.</p>
+        </a>
+
+        <a class="feature-card" href="/students/">
+            <div class="feature-icon">👨‍🎓</div>
+            <h3>Student Management</h3>
+            <p>Maintain student details and admission records.</p>
+        </a>
+
+        <a class="feature-card" href="/rooms/">
+            <div class="feature-icon">🛏️</div>
+            <h3>Room Management</h3>
+            <p>Manage rooms, bed availability, and allocation.</p>
+        </a>
+
+        <a class="feature-card" href="/fees/">
+            <div class="feature-icon">💳</div>
+            <h3>Fee Management</h3>
+            <p>Track payments, pending fees, and history.</p>
+        </a>
+    </div>
+</section>
+{% endblock %}
