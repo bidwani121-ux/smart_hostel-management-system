@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 @login_not_required
 def homepage(request):
-    return render(request, "homepage.html")
+    return render(request, "home.html")
 
 
 def dashboard(request):
