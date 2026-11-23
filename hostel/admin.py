@@ -1,14 +1,6 @@
-
 from django.contrib import admin
-from .models import (
-    Student,
-    Room,
-    RoomAllocation,
-    Attendance,
-    Complaint,
-    FeePayment,
-    FeeReminder
-)
+
+from .models import Student, Room, RoomAllocation, Attendance, Complaint, FeePayment, FeeReminder, StudentMovement, GuardianAlertLog
 
 
 # Room Admin with Bed Availability
@@ -40,3 +32,5 @@ admin.site.register(Attendance)
 admin.site.register(Complaint)
 admin.site.register(FeePayment)
 admin.site.register(FeeReminder)
+admin.site.register(StudentMovement)
+admin.site.register(GuardianAlertLog)

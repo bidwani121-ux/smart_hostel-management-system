@@ -99,3 +99,110 @@ class FeeReminder(models.Model):
     def __str__(self):
         return f"Reminder - {self.student.name}"
 
+
+
+
+# 8. Student Movement Database
+class StudentMovement(models.Model):
+
+    STATUS_CHOICES = [
+        ('INSIDE', 'Inside Hostel'),
+        ('OUTSIDE', 'Outside Hostel'),
+    ]
+
+    ALERT_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('SENT', 'Sent'),
+        ('FAILED', 'Failed'),
+        ('NOT_REQUIRED', 'Not Required'),
+    ]
+
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.PROTECT,
+        related_name='movements'
+    )
+
+    movement_date = models.DateField()
+
+    check_out_time = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    check_in_time = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='INSIDE'
+    )
+
+    guardian_alert_status = models.CharField(
+        max_length=15,
+        choices=ALERT_STATUS_CHOICES,
+        default='NOT_REQUIRED'
+    )
+
+    guardian_alert_sent_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-movement_date', '-check_out_time']
+
+    def __str__(self):
+        return f"{self.student.name} - {self.movement_date}"
+
+
+
+
+# 9. Guardian Alert Log
+class GuardianAlertLog(models.Model):
+
+    ALERT_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('SENT', 'Sent'),
+        ('FAILED', 'Failed'),
+    ]
+
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.PROTECT,
+        related_name='guardian_alerts'
+    )
+
+    alert_date = models.DateField()
+
+    status = models.CharField(
+        max_length=10,
+        choices=ALERT_STATUS_CHOICES,
+        default='PENDING'
+    )
+
+    message = models.TextField(blank=True)
+
+    sent_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-alert_date']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['student', 'alert_date'],
+                name='unique_guardian_alert_per_student_per_day'
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.student.name} - {self.alert_date}"

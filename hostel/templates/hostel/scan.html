@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel QR Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            text-align: center;
+            padding: 40px 15px;
+        }
+
+        .container {
+            background: white;
+            max-width: 420px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #0002;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hostel Gate QR System</h2>
+    <p>Enter or scan the student's QR code.</p>
+
+    <form id="scanForm">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            id="student_id"
+            placeholder="Enter Student ID (e.g. 105)"
+            required
+        >
+
+        <button type="submit">Scan Student</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+document.getElementById("scanForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const studentId = document.getElementById("student_id").value;
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const result = document.getElementById("result");
+
+    try {
+        const response = await fetch("/hostel/scan-qr/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": csrfToken
+            },
+            body: new URLSearchParams({
+                student_id: studentId
+            })
+        });
+
+        const data = await response.json();
+
+        result.textContent = data.message || "Something went wrong.";
+        result.style.color = data.success ? "green" : "red";
+
+        if (data.success) {
+            document.getElementById("student_id").value = "";
+        }
+
+    } catch (error) {
+        result.textContent = "Unable to connect to server.";
+        result.style.color = "red";
+    }
+});
+</script>
+
+</body>
+</html>
