@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "students",
     "rooms",
     "fees",
+    "hostel",
 ]
 
 MIDDLEWARE = [

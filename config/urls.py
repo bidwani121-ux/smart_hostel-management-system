@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_not_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import include, path
+from django.views.generic import RedirectView
 from accounts import views as account_views
 
 urlpatterns = [
@@ -22,7 +23,8 @@ urlpatterns = [
     path("", account_views.homepage, name="homepage"),
     path("", account_views.homepage, name="home"),
     path("dashboard/", account_views.dashboard, name="dashboard"),
-    path("students/", include("students.urls")),
-    path("rooms/", include("rooms.urls")),
-    path("fees/", include("fees.urls")),
+    path("students/", RedirectView.as_view(url="/admin/hostel/student/", permanent=False)),
+    path("rooms/", RedirectView.as_view(url="/admin/hostel/room/", permanent=False)),
+    path("fees/", RedirectView.as_view(url="/admin/hostel/feepayment/", permanent=False)),
+    path("hostel/", include("hostel.urls")),
 ]
